@@ -4,7 +4,6 @@ import com.detectify.screenshotservice.domain.ScreenShot;
 import com.detectify.screenshotservice.exception.ScreenShotNotFoundException;
 import com.detectify.screenshotservice.repository.ScreenShotRepository;
 import com.detectify.screenshotservice.service.ScreenShotService;
-import com.detectify.screenshotservice.service.WebDriverService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,13 +15,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ScreenShotServiceImpl implements ScreenShotService {
 
-    private final WebDriverService webDriverService;
     private final ScreenShotRepository screenShotRepository;
 
     @Override
-    public ScreenShot createScreenShot(String url) {
+    public ScreenShot createScreenShot(String url, byte[] image) {
         log.info("Creating screen shot for URL [{}]", url);
-        byte[] image = webDriverService.takeScreenShot(url);
         return saveOrUpdate(url, image);
     }
 
@@ -46,6 +43,6 @@ public class ScreenShotServiceImpl implements ScreenShotService {
     public ScreenShot getScreenShot(String url) {
         log.info("Getting screen shot for URL [{}]", url);
         return screenShotRepository.findByUrl(url)
-                .orElseThrow(ScreenShotNotFoundException::new);
+                .orElseThrow(() -> new ScreenShotNotFoundException());
     }
 }

@@ -5,4 +5,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ScreenShotNotFoundException extends RuntimeException{
+
+    public ScreenShotNotFoundException() {
+        super("Screen shot not found");
+    }
 }

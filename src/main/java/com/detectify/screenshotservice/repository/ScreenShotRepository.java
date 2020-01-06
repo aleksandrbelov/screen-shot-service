@@ -8,6 +8,5 @@ import java.util.Optional;
 public interface ScreenShotRepository extends MongoRepository<ScreenShot, String> {
 
     Optional<ScreenShot> findByUrl(String url);
-    boolean existsByUrl(String url);
 
 }

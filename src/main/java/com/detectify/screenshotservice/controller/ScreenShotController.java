@@ -25,7 +25,7 @@ public class ScreenShotController {
     private final ScreenShotService screenShotService;
     private final MessagingService<String> messagingService;
 
-    @PostMapping
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     public void createScreenShots(@RequestBody @Valid CreateScreenShotRequest request) {
         messagingService.send("create-screenshot", request.getUrls());
     }
