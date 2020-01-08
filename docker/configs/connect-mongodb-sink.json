@@ -1,0 +1,19 @@
+{
+	"name": "mongodb-sink",
+    "config": {
+    	"document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy",
+    	"value.projection.list": "url",
+    	"value.projection.type": "whitelist",
+        "connector.class": "MongoSinkConnector",
+        "tasks.max": 1,
+        "topics": "screenshot-taken",
+        "connection.uri": "mongodb://mongo-db:27017",
+        "database": "test",
+        "collection": "screenshot",
+        "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "key.converter.schemas.enable": false,
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": false,
+        "writemodel.strategy": "com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"
+    }
+}
