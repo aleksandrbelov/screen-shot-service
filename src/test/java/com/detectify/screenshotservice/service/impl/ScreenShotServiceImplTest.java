@@ -11,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -37,7 +38,7 @@ class ScreenShotServiceImplTest {
 
     @Test
     void createScreenShot_save() {
-        ScreenShot expected = ScreenShot.builder().url(WWW_GOOGLE_COM).image(image).build();
+        ScreenShot expected = ScreenShot.builder().url(WWW_GOOGLE_COM).image(Base64.getEncoder().encodeToString(image)).build();
 
         when(repository.findByUrl(WWW_GOOGLE_COM)).thenReturn(Optional.empty());
         when(repository.insert(expected)).thenReturn(expected);
@@ -49,7 +50,7 @@ class ScreenShotServiceImplTest {
 
     @Test
     void createScreenShot_update() {
-        ScreenShot expected = ScreenShot.builder().url(WWW_GOOGLE_COM).image(image).build();
+        ScreenShot expected = ScreenShot.builder().url(WWW_GOOGLE_COM).image(Base64.getEncoder().encodeToString(image)).build();
 
         when(repository.findByUrl(WWW_GOOGLE_COM)).thenReturn(Optional.of(expected));
         when(repository.save(expected)).thenReturn(expected);
@@ -61,7 +62,7 @@ class ScreenShotServiceImplTest {
 
     @Test
     void getScreenShot() {
-        ScreenShot expected = ScreenShot.builder().url(WWW_GOOGLE_COM).image(image).build();
+        ScreenShot expected = ScreenShot.builder().url(WWW_GOOGLE_COM).image(Base64.getEncoder().encodeToString(image)).build();
 
         when(repository.findByUrl(WWW_GOOGLE_COM)).thenReturn(Optional.of(expected));
         ScreenShot actual = service.getScreenShot(WWW_GOOGLE_COM);

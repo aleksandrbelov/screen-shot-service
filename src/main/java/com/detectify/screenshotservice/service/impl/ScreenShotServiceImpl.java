@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.Optional;
 
 @Slf4j
@@ -30,12 +31,12 @@ public class ScreenShotServiceImpl implements ScreenShotService {
             return updateImage(image, screenShotOpt.get());
         }
 
-        ScreenShot screenShot = ScreenShot.builder().url(url).image(image).build();
+        ScreenShot screenShot = ScreenShot.builder().url(url).image(Base64.getEncoder().encodeToString(image)).build();
         return screenShotRepository.insert(screenShot);
     }
 
     private ScreenShot updateImage(byte[] image, ScreenShot screenShot) {
-        screenShot.setImage(image);
+        screenShot.setImage(Base64.getEncoder().encodeToString(image));
         return screenShotRepository.save(screenShot);
     }
 
@@ -43,6 +44,6 @@ public class ScreenShotServiceImpl implements ScreenShotService {
     public ScreenShot getScreenShot(String url) {
         log.info("Getting screen shot for URL [{}]", url);
         return screenShotRepository.findByUrl(url)
-                .orElseThrow(() -> new ScreenShotNotFoundException());
+                .orElseThrow(ScreenShotNotFoundException::new);
     }
 }

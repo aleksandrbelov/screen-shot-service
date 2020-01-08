@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Base64;
 
 @RestController
 @RequestMapping("/api/v1/screenshot")
@@ -33,7 +34,7 @@ public class ScreenShotController {
     @GetMapping(produces = {MediaType.IMAGE_PNG_VALUE})
     public Resource getScreenShot(@RequestParam("url") String url) {
         ScreenShot screenShot = screenShotService.getScreenShot(url);
-        return new ByteArrayResource(screenShot.getImage());
+        return new ByteArrayResource(Base64.getDecoder().decode(screenShot.getImage()));
     }
 
 

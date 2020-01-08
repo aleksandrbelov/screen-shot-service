@@ -19,6 +19,7 @@ public class ScreenShot {
     private String id;
     @Indexed(unique = true)
     private String url;
-    private byte[] image;
+//    private byte[] image;
+    private String image;
 
 }

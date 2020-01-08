@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
+import java.util.Base64;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -30,16 +30,12 @@ class ScreenShotRepositoryTest {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void findByUrl() throws IOException {
         InputStream inputStream = new ClassPathResource("static/google-screenshot.png").getInputStream();
         byte[] image = IOUtils.toByteArray(inputStream);
 
-        ScreenShot screenShot = ScreenShot.builder().image(image).url(WWW_GOOGLE_COM).build();
+        ScreenShot screenShot = ScreenShot.builder().image(Base64.getEncoder().encodeToString(image)).url(WWW_GOOGLE_COM).build();
 
         ScreenShot expected = mongoTemplate.save(screenShot);
 

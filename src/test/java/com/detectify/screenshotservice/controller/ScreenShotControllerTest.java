@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
@@ -68,7 +69,7 @@ class ScreenShotControllerTest {
         InputStream inputStream = new ClassPathResource("static/google-screenshot.png").getInputStream();
         byte[] image = IOUtils.toByteArray(inputStream);
 
-        ScreenShot screenShot = ScreenShot.builder().url(WWW_GOOGLE_COM).image(image).build();
+        ScreenShot screenShot = ScreenShot.builder().url(WWW_GOOGLE_COM).image(Base64.getEncoder().encodeToString(image)).build();
         when(screenShotService.getScreenShot(WWW_GOOGLE_COM)).thenReturn(screenShot);
 
         MvcResult mvcResult = mockMvc.perform(get("/api/v1/screenshot").param("url", WWW_GOOGLE_COM))

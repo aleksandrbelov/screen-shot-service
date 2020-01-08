@@ -1,8 +1,5 @@
 spring:
   kafka:
-    consumer:
-      auto-offset-reset: earliest
-      group-id: screen-shot-service
     bootstrap-servers: ${BOOTSTRAP_SERVERS:127.0.0.1:57235, 127.0.0.1:57238}
   data:
     mongodb:
@@ -11,13 +8,3 @@ spring:
 
 server:
   port: 8080
-
-webdriver:
-  location: "/usr/lib/chromium/chromedriver"
-  options:
-    - "--headless"
-    - "--no-sandbox"
-    - "--disable-dev-shm-usage"
-    - "--disable-gpu"
-    - "--disable-extensions"
-    - "disable-infobars"
